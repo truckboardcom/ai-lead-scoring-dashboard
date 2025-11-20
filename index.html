@@ -644,6 +644,155 @@
             background-size: 1000px 100%;
             animation: shimmer 2s infinite;
         }
+    
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            margin: 2% auto;
+            padding: 0;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--gradient-1);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .close {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 32px;
+        }
+
+        .detail-section {
+            margin-bottom: 24px;
+            padding: 20px;
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .detail-section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .reasons-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .reasons-list li {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 3px solid var(--primary);
+            border-radius: 8px;
+            color: var(--text-secondary);
+        }
+
+        .score-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .score-badge.hot {
+            background: var(--gradient-hot);
+            color: white;
+        }
+
     </style>
 </head>
 <body>
@@ -1734,15 +1883,152 @@
             });
         }
 
-        // Show lead details (placeholder)
+
+        // Lead data
+        const leadsData = {"19396870": {"id": 19396870, "name": "Lead nikhil_jayaraj@yahoo.com / 15205676:7824673694", "score": 121, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 48, "days_since_update": 2, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Australia | 02.10", "contact_method": "WhatsApp", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает WhatsApp (высокая вовлеченность)", "⚠️ Старый лид (48 дней)", "✅ Недавняя активность (≤3 дней)", "💰 Есть ценность: $200000", "Есть TRANID (идентифицируемая сессия)"]}, "19907411": {"id": 19907411, "name": "Lead ajays@gmail.com / 15205676:7932005795", "score": 113, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 7, "days_since_update": 1, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Singapore | 10.11", "contact_method": "Phone", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Phone (готов к разговору)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19906857": {"id": 19906857, "name": "Lead info@stayoco.com / 15205676:7931922394", "score": 111, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 7, "days_since_update": 1, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | US | 10.11", "contact_method": "WhatsApp", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает WhatsApp (высокая вовлеченность)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19909275": {"id": 19909275, "name": "Lead sealazim@hmail.com / 15205676:7932243245", "score": 111, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 7, "days_since_update": 1, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | US | 10.11", "contact_method": "WhatsApp", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает WhatsApp (высокая вовлеченность)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19910897": {"id": 19910897, "name": "Lead shreevardhankandoi@gmail.com / 15205676:7932389354", "score": 111, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 7, "days_since_update": 1, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | US | 10.11", "contact_method": "WhatsApp", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает WhatsApp (высокая вовлеченность)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19912265": {"id": 19912265, "name": "Lead ailsabrown899@gmail.com / 15205676:7932652965", "score": 111, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 6, "days_since_update": 1, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Singapore | 10.11", "contact_method": "WhatsApp", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает WhatsApp (высокая вовлеченность)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19915101": {"id": 19915101, "name": "Lead pablolazarte32@gmail.com / 15205676:7934940284", "score": 111, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 6, "days_since_update": 0, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | US | 10.11", "contact_method": "WhatsApp", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает WhatsApp (высокая вовлеченность)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19911583": {"id": 19911583, "name": "Lead anwenzel@me.com / 15205676:7932423544", "score": 108, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 7, "days_since_update": 1, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Australia | 10.11", "contact_method": "Email", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Email (легко следовать)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19911585": {"id": 19911585, "name": "Lead jowenlouis_smith@icloud.com / 15205676:7932423655", "score": 108, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 7, "days_since_update": 1, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Australia | 10.11", "contact_method": "Email", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Email (легко следовать)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19911715": {"id": 19911715, "name": "Lead babuaustralia@gmail.com / 15205676:7932432614", "score": 108, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 7, "days_since_update": 1, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Australia | 10.11", "contact_method": "Email", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Email (легко следовать)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19912835": {"id": 19912835, "name": "Lead ilyas.pa.anane@gmail.com / 15205676:7934652985", "score": 108, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 6, "days_since_update": 0, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Australia | 10.11", "contact_method": "Email", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Email (легко следовать)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19925557": {"id": 19925557, "name": "Lead allane@ucsd.edu / 15205676:7938442084", "score": 108, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 5, "days_since_update": 0, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | US | 10.11", "contact_method": "Email", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Email (легко следовать)", "🔥 Очень свежий лид (≤7 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19788861": {"id": 19788861, "name": "Lead harshatejapullagura@gmail.com / 15205676:7927972634", "score": 106, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 8, "days_since_update": 3, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | US | 10.11", "contact_method": "WhatsApp", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает WhatsApp (высокая вовлеченность)", "Свежий лид (≤14 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19788885": {"id": 19788885, "name": "Lead firozkhan649786@gmail.com / 15205676:7927988924", "score": 106, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 8, "days_since_update": 1, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Australia | 10.11", "contact_method": "WhatsApp", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает WhatsApp (высокая вовлеченность)", "Свежий лид (≤14 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19787899": {"id": 19787899, "name": "Lead adomeredith@gmail.com / 15205676:7926347245", "score": 106, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 9, "days_since_update": 1, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Australia | 10.11", "contact_method": "WhatsApp", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает WhatsApp (высокая вовлеченность)", "Свежий лид (≤14 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19783207": {"id": 19783207, "name": "Lead vivian_xi@hotmail.com / 15205676:7925708085", "score": 103, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 9, "days_since_update": 3, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Australia | 10.11", "contact_method": "Email", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Email (легко следовать)", "Свежий лид (≤14 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19783949": {"id": 19783949, "name": "Lead Connect2raoul@gmail.com / 15205676:7925976755", "score": 103, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 9, "days_since_update": 3, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Singapore | 10.11", "contact_method": "Email", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Email (легко следовать)", "Свежий лид (≤14 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19784065": {"id": 19784065, "name": "Lead ranadheer.reddy1989@gmail.com / 15205676:7925988155", "score": 103, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 9, "days_since_update": 3, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | US | 10.11", "contact_method": "Email", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Email (легко следовать)", "Свежий лид (≤14 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19787401": {"id": 19787401, "name": "Lead nard.latimore@gmail.com / 15205676:7926324314", "score": 103, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 9, "days_since_update": 3, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | US | 10.11", "contact_method": "Email", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Email (легко следовать)", "Свежий лид (≤14 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}, "19881487": {"id": 19881487, "name": "Lead erfanfazeli@icloud.com / 15205676:7929485495", "score": 103, "category": "🔥 ГОРЯЧИЙ", "priority": "Высокий", "age_days": 8, "days_since_update": 2, "utm_source": "meta", "utm_medium": null, "utm_campaign": "TOF | Australia | 10.11", "contact_method": "Email", "has_custom_fields": true, "custom_fields_count": 13, "reasons": ["Есть UTM данные (отслеживаемый источник)", "Источник: Meta (качественный канал)", "Кампания: TOF (Top of Funnel)", "Custom поля: 13 (данные есть)", "Предпочитает Email (легко следовать)", "Свежий лид (≤14 дней)", "✅ Недавняя активность (≤3 дней)", "Нет указанной цены", "Есть TRANID (идентифицируемая сессия)"]}};
+
+        // Show lead details
         function showLeadDetails(leadId) {
-            alert('Детальная информация по лиду #' + leadId + ' будет добавлена в следующей версии');
+            const lead = leadsData[leadId];
+            if (!lead) {
+                alert('Информация о лиде не найдена');
+                return;
+            }
+
+            const modal = document.getElementById('leadModal');
+            const modalBody = document.getElementById('modalBody');
+
+            // Generate modal content
+            modalBody.innerHTML = `
+                <div class="detail-section">
+                    <h3>📊 Общая информация</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">ID лида:</span>
+                        <span class="detail-value">${lead.id}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Название:</span>
+                        <span class="detail-value">${lead.name}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Категория:</span>
+                        <span class="detail-value">${lead.category}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Приоритет:</span>
+                        <span class="detail-value">${lead.priority}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Скор:</span>
+                        <span class="detail-value"><span class="score-badge hot">${lead.score}</span></span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>⏰ Активность</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">Возраст лида:</span>
+                        <span class="detail-value">${lead.age_days} дней</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Последняя активность:</span>
+                        <span class="detail-value">${lead.days_since_update} ${lead.days_since_update === 0 ? 'сегодня' : 'дней назад'}</span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>🎯 Источник и метки</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">UTM Source:</span>
+                        <span class="detail-value">${lead.utm_source || 'Не указан'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">UTM Medium:</span>
+                        <span class="detail-value">${lead.utm_medium || 'Не указан'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">UTM Campaign:</span>
+                        <span class="detail-value">${lead.utm_campaign || 'Не указан'}</span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>📞 Контакты</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">Предпочитаемый метод:</span>
+                        <span class="detail-value">${lead.contact_method || 'Не указан'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Заполнено полей:</span>
+                        <span class="detail-value">${lead.custom_fields_count}</span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>✨ Причины скоринга</h3>
+                    <ul class="reasons-list">
+                        ${lead.reasons.map(reason => `<li>${reason}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div style="margin-top: 24px; display: flex; gap: 12px;">
+                    <a href="https://golzpartners.kommo.com/leads/detail/${lead.id}" 
+                       target="_blank" 
+                       class="action-btn primary" 
+                       style="flex: 1;">
+                        👁️ Открыть в CRM
+                    </a>
+                    <button onclick="closeModal()" class="action-btn secondary" style="flex: 1;">
+                        Закрыть
+                    </button>
+                </div>
+            `;
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('leadModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('leadModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
 
         // Auto-refresh every 5 minutes
         setTimeout(() => {
             location.reload();
         }, 5 * 60 * 1000);
     </script>
+
+    <!-- Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Детальная информация о лиде</h2>
+                <button class="close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
