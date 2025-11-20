@@ -1,0 +1,26 @@
+name: Auto Update Dashboard
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Каждые 30 минут
+  workflow_dispatch:  # Ручной запуск
+
+jobs:
+  update-dashboard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update timestamp
+        run: |
+          sed -i "s/Последнее обновление: .*/Последнее обновление: $(date +'%d.%m.%Y %H:%M')/" index.html
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add index.html
+          git diff --quiet && git diff --staged --quiet || git commit -m "🤖 Auto update dashboard - $(date +'%Y-%m-%d %H:%M')"
+          git push
